@@ -1,0 +1,120 @@
+@use '@/styles/mixins/breakpoints' as *;
+@use '@/styles/mixins/utils' as *;
+@use '@/styles/common/variables' as *;
+
+.section {
+  background: #fff;
+  color: #000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10rem 2rem;
+  text-align: center;
+  position: relative;
+
+  @include media-breakpoint-down(md) {
+    min-height: 70vh;
+    padding: 8rem 2rem;
+  }
+}
+
+.label {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('lg');
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0 0 6rem;
+  width: 100%;
+  text-align: center;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('lg', mobile);
+    margin-bottom: 4rem;
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  width: 100%;
+
+  @include media-breakpoint-down(md) {
+    gap: 2rem;
+  }
+}
+
+.arrow {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1rem;
+  color: #000;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+
+  @include hover() {
+    opacity: 1;
+  }
+
+  &:disabled {
+    opacity: 0.2;
+    cursor: default;
+  }
+}
+
+.swiper {
+  flex: 1;
+  min-width: 0;
+}
+
+.slide {
+  min-height: 26rem;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4rem;
+}
+
+.valueTitle {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('md');
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+  opacity: 0.7;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('sm', mobile);
+  }
+}
+
+.valueBody {
+  max-width: 90rem;
+  margin: 0 auto;
+  p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: font-size('xl');
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.5em;
+
+    @include media-breakpoint-down(md) {
+      font-size: font-size('md', mobile);
+    }
+  }
+}
+
+.counter {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xs');
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 4rem 0 0;
+  opacity: 0.6;
+}

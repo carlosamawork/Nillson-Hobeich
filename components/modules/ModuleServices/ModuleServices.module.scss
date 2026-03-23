@@ -1,0 +1,131 @@
+@use '@/styles/mixins/breakpoints' as *;
+@use '@/styles/mixins/utils' as *;
+@use '@/styles/common/variables' as *;
+
+.section {
+  background: #fff;
+  color: #000;
+  padding: 10rem 0 8rem;
+  min-height: 100vh;
+
+  @include media-breakpoint-down(md) {
+    padding: 8rem 0 6rem;
+  }
+}
+
+.label {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('lg');
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 100px;
+  opacity: 1;
+  padding: 0 2rem;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('lg', mobile);
+    margin-bottom: 4rem;
+  }
+}
+
+.track {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  padding-bottom: 2rem;
+  @include remove-scrollbar();
+  cursor: grab;
+  user-select: none;
+
+  &::before,
+  &::after {
+    content: '';
+    flex-shrink: 0;
+    width: 10rem;
+
+    @include media-breakpoint-down(md) {
+      width: 2rem;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    gap: 1.6rem;
+    cursor: default;
+  }
+}
+
+.card {
+  flex-shrink: 0;
+  width: 36.7rem;
+  display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-down(md) {
+    width: 72vw;
+  }
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 367 / 449;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  @include hover() {
+    .card:hover & {
+      opacity: 1;
+    }
+  }
+}
+
+.overlayText {
+  text-align: center;
+
+  p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: font-size('md');
+    line-height: 1.25;
+    color: #000;
+    margin: 0 0;
+
+    @include media-breakpoint-down(md) {
+      font-size: font-size('md', mobile);
+    }
+  }
+}
+
+.counter {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xs');
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 40px 0 0;
+  opacity: 1;
+  text-align: center;
+}
+
+.title {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('lg');
+  letter-spacing: -0.02em;
+  margin: 1.2rem 0 0;
+  text-align: center;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('lg', mobile);
+  }
+}

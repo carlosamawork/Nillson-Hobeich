@@ -1,0 +1,84 @@
+@use '@/styles/mixins/breakpoints' as *;
+@use '@/styles/mixins/utils' as *;
+@use '@/styles/common/variables' as *;
+
+.section {
+  background: #000;
+  color: #fff;
+  padding: 12rem 2rem 10rem;
+  text-align: center;
+  min-height: 100vh;
+
+  @include media-breakpoint-down(md) {
+    padding: 8rem 2rem 8rem;
+  }
+}
+
+.label {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('lg');
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0 0 8rem;
+  opacity: 1;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('lg', mobile);
+    margin-bottom: 5rem;
+  }
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.itemLabel {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xs');
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0;
+  opacity: 1;
+}
+
+.itemContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.value {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('lg');
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-decoration: none;
+  display: block;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('lg', mobile);
+  }
+}
+
+p.value {
+  margin: 0;
+}
+
+.divider {
+  width: 20rem;
+  height: 1px;
+  background: rgba(255, 255, 255, 1);
+}

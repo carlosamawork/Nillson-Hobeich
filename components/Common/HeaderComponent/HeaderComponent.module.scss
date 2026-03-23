@@ -1,0 +1,207 @@
+@use '@/styles/mixins/breakpoints' as *;
+@use '@/styles/mixins/utils' as *;
+@use '@/styles/common/variables' as *;
+
+// Two separate fixed layers:
+// .header  → mix-blend-mode: difference (nav + right + hamburger)
+// .logoWrap → NO blend mode, separate fixed element → star always red
+
+// ── Layer 1: blend layer ───────────────────────────────────
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 28px 2.4rem;
+  z-index: 200;
+  mix-blend-mode: difference;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none; // let logo clicks pass through
+
+  @include media-breakpoint-down(md) {
+    padding: 0 2rem;
+  }
+
+  // re-enable pointer events on interactive children
+  a, button, nav {
+    pointer-events: auto;
+  }
+}
+
+// ── Nav (left) ─────────────────────────────────────────────
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 45px;
+
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+}
+
+.navLink {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xs');
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+
+  @include hover() {
+    text-decoration: underline;
+  }
+}
+
+// ── Layer 2: logo (no blend mode) ─────────────────────────
+
+.logoWrap {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 201;
+  padding: 30px 0 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  text-decoration: none;
+  // NO mix-blend-mode here → star stays #C30000
+
+  @include media-breakpoint-down(md) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+// ── Right ──────────────────────────────────────────────────
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 31px;
+
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+}
+
+.clientAccess {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xs');
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+
+  @include hover() {
+    text-decoration: underline;
+  }
+}
+
+.locales {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.localeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xs');
+  letter-spacing: 0.06em;
+  color: #fff;
+  padding: 0;
+  transition: opacity 0.2s ease;
+
+  @include hover() {
+    opacity: 1;
+  }
+}
+
+.localeBtnActive {
+  text-decoration: underline;
+}
+
+// ── Hamburger (mobile) ─────────────────────────────────────
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+
+  @include media-breakpoint-down(md) {
+    display: flex;
+  }
+}
+
+.bar {
+  display: block;
+  width: 2.2rem;
+  height: 1px;
+  background: #fff;
+  transition: transform 0.25s ease;
+}
+
+.barOpen1 {
+  transform: translateY(0.6rem) rotate(45deg);
+}
+
+.barOpen2 {
+  transform: translateY(-0.6rem) rotate(-45deg);
+}
+
+// ── Mobile menu overlay ────────────────────────────────────
+
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: $secondary;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.4rem;
+}
+
+.mobileNavLink {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xl', mobile);
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-decoration: none;
+
+  @include hover() {
+    text-decoration: underline;
+  }
+}
+
+.mobileLocales {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar { transition: none; }
+}

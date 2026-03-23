@@ -1,0 +1,143 @@
+@use '@/styles/mixins/breakpoints' as *;
+@use '@/styles/mixins/utils' as *;
+@use '@/styles/common/variables' as *;
+
+.section {
+  background: #fff;
+  color: #000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 0;
+  overflow: hidden;
+
+  @include media-breakpoint-down(md) {
+    padding: 6rem 0;
+  }
+}
+
+.label {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('lg');
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 3rem;
+  padding: 0 2rem;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('lg', mobile);
+    margin-bottom: 2.4rem;
+  }
+}
+
+.postTitle {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xl');
+  font-weight: normal;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 auto 4rem;
+  max-width: 74rem;
+  padding: 0 2rem;
+  animation: titleFade 0.4s ease;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('xl', mobile);
+    margin-bottom: 3rem;
+  }
+}
+
+@keyframes titleFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ── Carousel ────────────────────────────────────────────────
+
+.carousel {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  align-items: center;
+  gap: 104px;
+  padding: 0 2rem;
+
+  @include media-breakpoint-down(md) {
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: 1.2rem;
+    padding: 0 1rem;
+  }
+}
+
+.side {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.25;
+  transition: opacity 0.3s ease;
+  display: block;
+  width: 100%;
+
+  @include hover() {
+    opacity: 0.5;
+  }
+}
+
+.active {
+  width: 100%;
+  animation: slideFade 0.4s ease;
+}
+
+@keyframes slideFade {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 832 / 502;
+  overflow: hidden;
+}
+
+// ── Footer ──────────────────────────────────────────────────
+
+.footer {
+  margin-top: 40px;
+  padding: 0 2rem;
+  p{
+    text-align: center;
+    margin: 0 0 5px;
+  }
+}
+
+.counter {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('sm');
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.readMore {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('sm');
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #000;
+  text-decoration: underline;
+
+  @include hover() {
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .postTitle, .active { animation: none; }
+  .side { transition: none; }
+}

@@ -1,0 +1,101 @@
+@use '@/styles/mixins/breakpoints' as *;
+@use '@/styles/mixins/utils' as *;
+@use '@/styles/common/variables' as *;
+
+.section {
+  background: #fff;
+}
+
+.member {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+
+  @include media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+}
+
+.photo {
+  position: relative;
+  overflow: hidden;
+  min-height: 60rem;
+  margin: auto;
+  width: 80%;
+
+  @include media-breakpoint-down(md) {
+    min-height: 50vw;
+    aspect-ratio: 4/5;
+  }
+}
+
+.content {
+  padding: 0rem 6rem 0rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include media-breakpoint-down(md) {
+    padding: 0rem 2rem 0rem;
+  }
+}
+
+.name {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xl');
+  font-weight: normal;
+  letter-spacing: -0.02em;
+  margin: 0 0 66px;
+  color: $secondary;
+  text-align: center;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('lg', mobile);
+    margin-bottom: 2rem;
+  }
+}
+
+.bio {
+  max-width: 80%;
+  margin: 0 auto 104px;
+
+  p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: font-size('md');
+    line-height: 25px;
+    color: $secondary;
+    margin: 0 0 1em;
+    text-align: center;
+
+    @include media-breakpoint-down(md) {
+      font-size: font-size('md', mobile);
+    }
+  }
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.link {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xs');
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $secondary;
+  text-decoration: underline;
+
+  @include hover() {
+    opacity: 0.6;
+  }
+}
+
+.separator {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xs');
+  color: $secondary;
+}

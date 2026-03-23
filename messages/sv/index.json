@@ -1,0 +1,12 @@
+{
+  "site": {
+    "title": "Nillson Hobeich",
+    "description": "Nillson Hobeich — Officiell webbplats"
+  },
+  "nav": {
+    "home": "Hem",
+    "about": "Om mig",
+    "work": "Arbete",
+    "contact": "Kontakt"
+  }
+}

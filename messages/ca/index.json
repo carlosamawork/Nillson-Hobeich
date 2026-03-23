@@ -1,0 +1,12 @@
+{
+  "site": {
+    "title": "Nillson Hobeich",
+    "description": "Nillson Hobeich — Lloc web oficial"
+  },
+  "nav": {
+    "home": "Inici",
+    "about": "Sobre mi",
+    "work": "Treball",
+    "contact": "Contacte"
+  }
+}
