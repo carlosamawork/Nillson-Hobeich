@@ -17,6 +17,7 @@ import Analytics from '@/components/Common/Analytics/google'
 
 type Props = {
   children: React.ReactNode
+  modal: React.ReactNode
   params: Promise<{ locale: string }>
 }
 
@@ -28,7 +29,7 @@ function RawHTML({ html }: { html: string }) {
   return <div className="credits" dangerouslySetInnerHTML={{ __html: html }} />
 }
 
-export default async function LocaleLayout({ children, params }: Props) {
+export default async function LocaleLayout({ children, modal, params }: Props) {
   const { locale } = await params
 
   if (!hasLocale(routing.locales, locale)) {
@@ -52,6 +53,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             <HeaderComponent data={header} locale={locale} />
 
             {children}
+            {modal}
 
             {/* <CookieConsent /> */}
             {process.env.NODE_ENV === 'production' && (

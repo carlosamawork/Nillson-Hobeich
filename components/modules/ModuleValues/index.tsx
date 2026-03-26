@@ -1,80 +1,81 @@
 'use client'
-import { useRef } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation } from 'swiper/modules'
-import type { Swiper as SwiperType } from 'swiper'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { PortableText } from '@portabletext/react'
 import s from './ModuleValues.module.scss'
 import type { ModuleValues as ModuleValuesType } from '@/sanity/types/home'
 import { getLocalizedText, getLocalizedBody } from '@/utils/localeHelper'
-
-import 'swiper/css'
 
 interface Props {
   data: ModuleValuesType
   locale?: string
 }
 
+const slideVariants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit:  { opacity: 0 },
+}
+
 export default function ModuleValues({ data, locale = 'en' }: Props) {
   const values = data.values ?? []
   const total = values.length
-  const swiperRef = useRef<SwiperType | null>(null)
-  const indexRef = useRef(0)
-  const counterRef = useRef<HTMLParagraphElement>(null)
+  const [index, setIndex] = useState(0)
 
   const sectionTitle = getLocalizedText(data.sectionTitle, locale)
 
-  function updateCounter(swiper: SwiperType) {
-    indexRef.current = swiper.realIndex
-    if (counterRef.current) {
-      counterRef.current.textContent = `${String(swiper.realIndex + 1).padStart(2, '0')}/${String(total).padStart(2, '0')}`
-    }
+  function prev() {
+    if (total <= 1) return
+    setIndex((i) => (i - 1 + total) % total)
   }
 
+  function next() {
+    if (total <= 1) return
+    setIndex((i) => (i + 1) % total)
+  }
+
+  const value = values[index]
+  const valueTitle = value ? getLocalizedText(value.title, locale) : null
+  const valueBody = value ? getLocalizedBody(value.text, locale) : []
+
   return (
-    <section
-      className={s.section}
-      id={data.id}
-    >
+    <section className={s.section} id={data.id}>
       {sectionTitle && <p className={s.label}>{sectionTitle}</p>}
 
       <div className={s.inner}>
         <button
           className={s.arrow}
-          onClick={() => swiperRef.current?.slidePrev()}
+          onClick={prev}
           aria-label="Previous value"
           disabled={total <= 1}
         >
           <ArrowLeft />
         </button>
 
-        <Swiper
-          modules={[Navigation]}
-          slidesPerView={1}
-          loop={total > 1}
-          onSwiper={(swiper) => { swiperRef.current = swiper }}
-          onSlideChange={updateCounter}
-          className={s.swiper}
-        >
-          {values.map((value, i) => {
-            const valueTitle = getLocalizedText(value?.title, locale)
-            const valueBody = getLocalizedBody(value?.text, locale)
-            return (
-              <SwiperSlide key={value._key ?? i} className={s.slide}>
-                {valueTitle && <p className={s.valueTitle}>{valueTitle}</p>}
-                {valueBody.length > 0 && (
-                  <div className={s.valueBody}>
-                    <PortableText value={valueBody} />
-                  </div>
-                )}
-              </SwiperSlide>
-            )
-          })}
-        </Swiper>
+        <div className={s.swiper}>
+          <AnimatePresence>
+            <motion.div
+              key={index}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className={s.slide}
+            >
+              {valueTitle && <p className={s.valueTitle}>{valueTitle}</p>}
+              {valueBody.length > 0 && (
+                <div className={s.valueBody}>
+                  <PortableText value={valueBody} />
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         <button
           className={s.arrow}
-          onClick={() => swiperRef.current?.slideNext()}
+          onClick={next}
           aria-label="Next value"
           disabled={total <= 1}
         >
@@ -83,8 +84,8 @@ export default function ModuleValues({ data, locale = 'en' }: Props) {
       </div>
 
       {total > 0 && (
-        <p className={s.counter} ref={counterRef}>
-          01/{String(total).padStart(2, '0')}
+        <p className={s.counter}>
+          {String(index + 1).padStart(2, '0')}/{String(total).padStart(2, '0')}
         </p>
       )}
     </section>

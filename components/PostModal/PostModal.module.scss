@@ -1,0 +1,165 @@
+@use '@/styles/mixins/breakpoints' as *;
+@use '@/styles/mixins/utils' as *;
+@use '@/styles/common/variables' as *;
+
+// ── Overlay (modal mode) ─────────────────────────────────────
+// z-index: 99 → below header (200) so mix-blend-mode: difference works on nav
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: #fff;
+  overflow: hidden;
+}
+
+.scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.close {
+  position: fixed;
+  top: 5.5rem;
+  // Figma: left: calc(83.33% - 5px) → same horizontal position as "Acceso Clientes"
+  right: calc(16.67% + 0.5rem);
+  z-index: 100;
+  background: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  padding: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+
+  @include media-breakpoint-down(md) {
+    top: 4.5rem;
+    right: 2rem;
+  }
+
+  @include hover() {
+    opacity: 0.45;
+  }
+}
+
+// ── Page (full-page mode) ────────────────────────────────────
+.page {
+  min-height: 100vh;
+  background: #fff;
+  color: #000;
+}
+
+// ── Article content ──────────────────────────────────────────
+.article {
+  max-width: 836px;
+  margin: 0 auto;
+  padding: 12rem 2rem 8rem;
+  color: #000;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+
+  @include media-breakpoint-down(md) {
+    padding: 8rem 2rem 6rem;
+  }
+}
+
+.section {
+  font-size: font-size('lg');
+  letter-spacing: 0.02em;
+  margin: 0 0 4rem;
+  opacity: 0.9;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('lg', mobile);
+    margin-bottom: 2.4rem;
+  }
+}
+
+.title {
+  font-size: font-size('lg');
+  font-weight: normal;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0 0 2.4rem;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('lg', mobile);
+  }
+}
+
+.byline {
+  font-size: font-size('sm');
+  line-height: 1.5;
+  opacity: 0.75;
+  margin: 0 0 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: center;
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('sm', mobile);
+    margin-bottom: 3.6rem;
+  }
+}
+
+.date {
+  opacity: 0.6;
+  font-size: font-size('xs');
+
+  @include media-breakpoint-down(md) {
+    font-size: font-size('xs', mobile);
+  }
+}
+
+// ── PortableText body ────────────────────────────────────────
+.body {
+  text-align: left;
+
+  p {
+    font-size: font-size('md');
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.6rem;
+    text-align: center;
+
+    @include media-breakpoint-down(md) {
+      font-size: font-size('md', mobile);
+    }
+  }
+
+  h2, h3 {
+    font-size: font-size('lg');
+    font-weight: normal;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 4rem 0 2rem;
+    text-align: center;
+
+    @include media-breakpoint-down(md) {
+      font-size: font-size('lg', mobile);
+    }
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    @include hover() {
+      opacity: 0.7;
+    }
+  }
+
+  strong {
+    font-weight: 700;
+  }
+
+  em {
+    font-style: italic;
+  }
+}
+

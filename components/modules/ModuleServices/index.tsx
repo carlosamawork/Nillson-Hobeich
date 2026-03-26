@@ -1,5 +1,6 @@
 'use client'
 import { useRef } from 'react'
+import { motion } from 'framer-motion'
 import { PortableText } from '@portabletext/react'
 import s from './ModuleServices.module.scss'
 import type { ModuleServices as ModuleServicesType } from '@/sanity/types/home'
@@ -9,6 +10,21 @@ import LazyImage from '@/components/Common/LazyImage'
 interface Props {
   data: ModuleServicesType
   locale?: string
+}
+
+const cardVariants = {
+  hidden: { opacity: 0 },
+  visible: (i: number) => ({
+    opacity: 1,
+    transition: { duration: 0.3, delay: i * 0.08, ease: 'easeOut' as const },
+  }),
+  hover: {},
+}
+
+const overlayVariants = {
+  hidden:   { opacity: 0 },
+  visible:  { opacity: 0, transition: { duration: 0.3, ease: 'easeOut' as const } },
+  hover:    { opacity: 1, transition: { duration: 0.3, ease: 'easeOut' as const } },
 }
 
 export default function ModuleServices({ data, locale = 'en' }: Props) {
@@ -78,10 +94,7 @@ export default function ModuleServices({ data, locale = 'en' }: Props) {
   }
 
   return (
-    <section
-      className={s.section}
-      id={data.id}
-    >
+    <section className={s.section} id={data.id}>
       {sectionTitle && <p className={s.label}>{sectionTitle}</p>}
 
       <div
@@ -96,9 +109,15 @@ export default function ModuleServices({ data, locale = 'en' }: Props) {
           const title = getLocalizedText(service.title, locale)
           const body = getLocalizedBody(service.text, locale)
           return (
-            <article
+            <motion.article
               key={service._key ?? i}
               className={s.card}
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              whileHover="hover"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={cardVariants}
             >
               <div className={s.imageWrap}>
                 {service.image?.imageUrl && (
@@ -116,18 +135,22 @@ export default function ModuleServices({ data, locale = 'en' }: Props) {
                   />
                 )}
                 {body.length > 0 && (
-                  <div className={s.overlay} aria-hidden="true">
+                  <motion.div
+                    className={s.overlay}
+                    aria-hidden="true"
+                    variants={overlayVariants}
+                  >
                     <div className={s.overlayText}>
                       <PortableText value={body} />
                     </div>
-                  </div>
+                  </motion.div>
                 )}
               </div>
               <p className={s.counter}>
                 {String(i + 1).padStart(2, '0')}/{String(services.length).padStart(2, '0')}
               </p>
               {title && <p className={s.title}>{title}</p>}
-            </article>
+            </motion.article>
           )
         })}
       </div>

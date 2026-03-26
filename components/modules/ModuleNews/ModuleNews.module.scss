@@ -33,27 +33,38 @@
   }
 }
 
+.titleWrap {
+  position: relative;
+  width: 100%;
+  min-height: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4rem;
+
+  @include media-breakpoint-down(md) {
+    min-height: 10rem;
+    margin-bottom: 3rem;
+  }
+}
+
 .postTitle {
+  position: absolute;
+  left: 0;
+  right: 0;
   font-family: 'Times New Roman', Times, serif;
   font-size: font-size('xl');
   font-weight: normal;
   line-height: 1.2;
   letter-spacing: -0.02em;
   text-align: center;
-  margin: 0 auto 4rem;
+  margin: 0 auto;
   max-width: 74rem;
   padding: 0 2rem;
-  animation: titleFade 0.4s ease;
 
   @include media-breakpoint-down(md) {
     font-size: font-size('xl', mobile);
-    margin-bottom: 3rem;
   }
-}
-
-@keyframes titleFade {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 
 // ── Carousel ────────────────────────────────────────────────
@@ -88,14 +99,15 @@
   }
 }
 
-.active {
+.activeWrap {
+  position: relative;
   width: 100%;
-  animation: slideFade 0.4s ease;
+  aspect-ratio: 832 / 502;
 }
 
-@keyframes slideFade {
-  from { opacity: 0.6; }
-  to   { opacity: 1; }
+.active {
+  position: absolute;
+  inset: 0;
 }
 
 .imageWrap {
@@ -138,6 +150,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .postTitle, .active { animation: none; }
   .side { transition: none; }
 }

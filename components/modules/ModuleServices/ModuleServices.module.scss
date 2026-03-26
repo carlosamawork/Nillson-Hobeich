@@ -83,13 +83,6 @@
   justify-content: center;
   padding: 3rem;
   opacity: 0;
-  transition: opacity 0.4s ease;
-
-  @include hover() {
-    .card:hover & {
-      opacity: 1;
-    }
-  }
 }
 
 .overlayText {
