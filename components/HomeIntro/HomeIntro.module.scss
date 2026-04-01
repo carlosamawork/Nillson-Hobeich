@@ -34,12 +34,10 @@
 .star {
   display: block;
   opacity: 0;
-  transform: translateY(6px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 
   &.visible {
     opacity: 1;
-    transform: translateY(0);
   }
 
   img {
@@ -50,12 +48,10 @@
 .logo {
   display: block;
   opacity: 0;
-  transform: translateY(8px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 
   &.visible {
     opacity: 1;
-    transform: translateY(0);
   }
 
   img {

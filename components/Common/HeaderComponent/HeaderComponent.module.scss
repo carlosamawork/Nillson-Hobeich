@@ -22,7 +22,7 @@
   pointer-events: none; // let logo clicks pass through
 
   @include media-breakpoint-down(md) {
-    padding: 0 2rem;
+    padding: 28px 1.5rem;
   }
 
   // re-enable pointer events on interactive children
@@ -144,6 +144,7 @@
 
   @include media-breakpoint-down(md) {
     display: flex;
+    margin-left: auto;
   }
 }
 
@@ -156,11 +157,11 @@
 }
 
 .barOpen1 {
-  transform: translateY(0.6rem) rotate(45deg);
+  transform: translateY(0.3rem) rotate(45deg);
 }
 
 .barOpen2 {
-  transform: translateY(-0.6rem) rotate(-45deg);
+  transform: translateY(-0.3rem) rotate(-45deg);
 }
 
 // ── Mobile menu overlay ────────────────────────────────────

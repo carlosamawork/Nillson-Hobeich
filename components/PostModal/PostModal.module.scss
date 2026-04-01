@@ -20,7 +20,7 @@
 }
 
 .close {
-  position: fixed;
+  position: absolute;
   top: 5.5rem;
   // Figma: left: calc(83.33% - 5px) → same horizontal position as "Acceso Clientes"
   right: calc(16.67% + 0.5rem);
@@ -36,8 +36,9 @@
   transition: opacity 0.2s ease;
 
   @include media-breakpoint-down(md) {
-    top: 4.5rem;
+    top: 6.5rem;
     right: 2rem;
+    padding: 0;
   }
 
   @include hover() {
@@ -62,7 +63,7 @@
   text-align: center;
 
   @include media-breakpoint-down(md) {
-    padding: 8rem 2rem 6rem;
+    padding: 8rem 1.5rem 6rem;
   }
 }
 

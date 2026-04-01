@@ -25,8 +25,9 @@
   width: 80%;
 
   @include media-breakpoint-down(md) {
-    min-height: 50vw;
-    aspect-ratio: 4/5;
+    width: 100%;
+    min-height: auto;
+    aspect-ratio: 3/4;
   }
 }
 
@@ -37,7 +38,7 @@
   justify-content: center;
 
   @include media-breakpoint-down(md) {
-    padding: 0rem 2rem 0rem;
+    padding: 3rem 1.5rem 4rem;
   }
 }
 
@@ -59,6 +60,10 @@
 .bio {
   max-width: 80%;
   margin: 0 auto 104px;
+
+  @include media-breakpoint-down(md) {
+    margin-bottom: 3rem;
+  }
 
   p {
     font-family: 'Times New Roman', Times, serif;

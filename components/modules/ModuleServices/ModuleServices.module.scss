@@ -26,6 +26,7 @@
   @include media-breakpoint-down(md) {
     font-size: font-size('lg', mobile);
     margin-bottom: 4rem;
+    padding: 0 1.5rem;
   }
 }
 
@@ -45,12 +46,12 @@
     width: 10rem;
 
     @include media-breakpoint-down(md) {
-      width: 2rem;
+      width: 0rem;
     }
   }
 
   @include media-breakpoint-down(md) {
-    gap: 1.6rem;
+    gap: 1.5rem;
     cursor: default;
   }
 }

@@ -27,6 +27,7 @@ export default function PostModal({ post, locale = 'en', asModal = false }: Prop
   const [isClosing, setIsClosing] = useState(false)
 
   function handleClose() {
+    document.body.style.overflow = ''
     setIsClosing(true)
   }
 
@@ -83,10 +84,16 @@ export default function PostModal({ post, locale = 'en', asModal = false }: Prop
       role="dialog"
       aria-modal="true"
       aria-label={title}
+      style={{ pointerEvents: isClosing ? 'none' : undefined }}
       initial={{ opacity: 0 }}
       animate={{ opacity: isClosing ? 0 : 1 }}
       transition={{ duration: isClosing ? 0.3 : 0.35, ease: 'easeInOut' }}
-      onAnimationComplete={() => { if (isClosing) router.back() }}
+      onAnimationComplete={() => {
+        if (isClosing) {
+          document.body.style.overflow = ''
+          router.back()
+        }
+      }}
     >
       <button
         className={s.close}
