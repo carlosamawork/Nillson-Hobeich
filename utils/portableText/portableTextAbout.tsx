@@ -15,7 +15,7 @@ export const portableBlockComponentsAbout: PortableTextComponents = {
       const href = value?.url; // ← field name from your schema
 
       return (
-        <Link href={href} target={`${value.newWindow ? '_blanck' : '_self'}`} rel="noopener noreferrer">
+        <Link href={href} target={value.newWindow ? '_blank' : '_self'} rel="noopener noreferrer">
           {children}
         </Link>
       );

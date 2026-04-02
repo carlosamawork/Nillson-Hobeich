@@ -6,6 +6,7 @@ import { PortableText } from '@portabletext/react'
 import s from './PostModal.module.scss'
 import type { PostFull } from '@/sanity/queries/queries/post'
 import { getLocalizedText, getLocalizedBody } from '@/utils/localeHelper'
+import { portableBlockComponents } from '@/utils/portableText/portableText'
 
 interface Props {
   post: PostFull
@@ -70,7 +71,7 @@ export default function PostModal({ post, locale = 'en', asModal = false }: Prop
       )}
       {body.length > 0 && (
         <div className={s.body}>
-          <PortableText value={body as Parameters<typeof PortableText>[0]['value']} />
+          <PortableText value={body as Parameters<typeof PortableText>[0]['value']} components={portableBlockComponents()} />
         </div>
       )}
     </article>
