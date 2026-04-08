@@ -63,6 +63,7 @@
 
   @include media-breakpoint-down(md) {
     margin-bottom: 3rem;
+    max-width: 90%;
   }
 
   p {
