@@ -8,5 +8,13 @@
     "about": "Sobre mi",
     "work": "Treball",
     "contact": "Contacte"
+  },
+  "header": {
+    "clientAccess": "Accés Clients"
+  },
+  "contact": {
+    "email": "Correu electrònic",
+    "phone": "Telèfon",
+    "address": "Adreça"
   }
 }

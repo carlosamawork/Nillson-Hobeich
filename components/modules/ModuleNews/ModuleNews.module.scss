@@ -105,6 +105,18 @@
   position: relative;
   width: 100%;
   aspect-ratio: 832 / 502;
+  overflow: hidden;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  img {
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
 }
 
 .active {

@@ -8,17 +8,25 @@ interface HomeIntroProps {
   heroImage?: ImageSanity & { alt: string }
 }
 
+// Module-level flag: cleared on hard reload, persists across soft navigations
+let introHasPlayed = false
+
 export default function HomeIntro({ heroImage }: HomeIntroProps) {
   const [starVisible, setStarVisible] = useState(false)
   const [logoVisible, setLogoVisible] = useState(false)
   const [fadeOut, setFadeOut] = useState(false)
-  const [hidden, setHidden] = useState(false)
+  const [hidden, setHidden] = useState(introHasPlayed)
 
   useEffect(() => {
+    if (introHasPlayed) return
+
     const t1 = setTimeout(() => setStarVisible(true), 800)
     const t2 = setTimeout(() => setLogoVisible(true), 1400)
     const t3 = setTimeout(() => setFadeOut(true), 2800)
-    const t4 = setTimeout(() => setHidden(true), 4000)
+    const t4 = setTimeout(() => {
+      introHasPlayed = true
+      setHidden(true)
+    }, 4000)
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)

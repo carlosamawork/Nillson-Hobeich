@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
+import { useTranslations } from 'next-intl'
 import s from './HeaderComponent.module.scss'
 import type { HeaderData } from '@/sanity/types'
 import { getLocalizedText } from '@/utils/localeHelper'
@@ -16,12 +17,27 @@ export default function HeaderComponent({ data, locale = 'en' }: Props) {
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
+  const t = useTranslations('header')
 
   const links = data?.headerLinks ?? []
+  const isModalOpen = pathname.startsWith('/news/')
 
   function switchLocale(next: string) {
-    router.replace(pathname, { locale: next })
+    router.replace(pathname, { locale: next, scroll: false })
     setMenuOpen(false)
+  }
+
+  function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, url: string) {
+    setMenuOpen(false)
+    if (isModalOpen) {
+      e.preventDefault()
+      router.back()
+      if (url?.startsWith('#')) {
+        setTimeout(() => {
+          document.querySelector(url)?.scrollIntoView({ behavior: 'smooth' })
+        }, 350)
+      }
+    }
   }
 
   return (
@@ -31,13 +47,15 @@ export default function HeaderComponent({ data, locale = 'en' }: Props) {
         <nav className={s.nav} aria-label="Main navigation">
           {links.map((link, i) => {
             const label = getLocalizedText(link.title, locale)
+            const url = link.url ?? '#'
             return (
               <a
                 key={i}
-                href={link.url ?? '#'}
+                href={url}
                 target={link.newWindow ? '_blank' : undefined}
                 rel={link.newWindow ? 'noopener noreferrer' : undefined}
                 className={s.navLink}
+                onClick={(e) => handleNavClick(e, url)}
               >
                 {label}
               </a>
@@ -46,8 +64,12 @@ export default function HeaderComponent({ data, locale = 'en' }: Props) {
         </nav>
 
         <div className={s.right}>
-          <a href="#contacto" className={s.clientAccess}>
-            Acceso Clientes
+          <a
+            href="#contacto"
+            className={s.clientAccess}
+            onClick={(e) => handleNavClick(e, '#contacto')}
+          >
+            {t('clientAccess')}
           </a>
           <div className={s.locales}>
             {routing.locales.map((loc) => (
@@ -87,14 +109,15 @@ export default function HeaderComponent({ data, locale = 'en' }: Props) {
           <nav className={s.mobileNav}>
             {links.map((link, i) => {
               const label = getLocalizedText(link.title, locale)
+              const url = link.url ?? '#'
               return (
                 <a
                   key={i}
-                  href={link.url ?? '#'}
+                  href={url}
                   target={link.newWindow ? '_blank' : undefined}
                   rel={link.newWindow ? 'noopener noreferrer' : undefined}
                   className={s.mobileNavLink}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, url)}
                 >
                   {label}
                 </a>

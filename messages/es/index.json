@@ -8,5 +8,13 @@
     "about": "Sobre mí",
     "work": "Trabajo",
     "contact": "Contacto"
+  },
+  "header": {
+    "clientAccess": "Acceso Clientes"
+  },
+  "contact": {
+    "email": "Email",
+    "phone": "Teléfono",
+    "address": "Dirección"
   }
 }

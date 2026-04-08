@@ -19,10 +19,12 @@ const titleVariants = {
 }
 
 const imageVariants = {
-  enter: { opacity: 0.5 },
+  enter: { opacity: 0 },
   center: { opacity: 1 },
-  exit:  { opacity: 0.5 },
+  exit:  { opacity: 0 },
 }
+
+const DRAG_THRESHOLD = 80
 
 export default function ModuleNews({ data, locale = 'en' }: Props) {
   const sectionTitle = getLocalizedText(data.sectionTitle, locale)
@@ -36,17 +38,22 @@ export default function ModuleNews({ data, locale = 'en' }: Props) {
   const nextIdx = (current + 1) % total
 
   const activePost = posts[current]
-  const prevPost  = posts[prevIdx]
-  const nextPost  = posts[nextIdx]
+  const prevPost   = posts[prevIdx]
+  const nextPost   = posts[nextIdx]
 
   const activeTitle = getLocalizedText(activePost.title, locale)
+
+  function goTo(idx: number) {
+    if (idx === current) return
+    setCurrent(idx)
+  }
 
   return (
     <section className={s.section} id={data.id}>
       {sectionTitle && <p className={s.label}>{sectionTitle}</p>}
 
       <div className={s.titleWrap}>
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           <motion.p
             key={current}
             className={s.postTitle}
@@ -54,7 +61,7 @@ export default function ModuleNews({ data, locale = 'en' }: Props) {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
           >
             {activeTitle}
           </motion.p>
@@ -65,7 +72,7 @@ export default function ModuleNews({ data, locale = 'en' }: Props) {
         {/* Prev */}
         <button
           className={s.side}
-          onClick={() => setCurrent(prevIdx)}
+          onClick={() => goTo(prevIdx)}
           aria-label="Noticia anterior"
         >
           {prevPost.coverImage?.imageUrl && (
@@ -87,8 +94,18 @@ export default function ModuleNews({ data, locale = 'en' }: Props) {
           )}
         </button>
 
-        {/* Active */}
-        <div className={s.activeWrap}>
+        {/* Active — draggable */}
+        <motion.div
+          className={s.activeWrap}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.12}
+          whileDrag={{ cursor: 'grabbing' }}
+          onDragEnd={(_, info) => {
+            if (info.offset.x < -DRAG_THRESHOLD) goTo(nextIdx)
+            else if (info.offset.x > DRAG_THRESHOLD) goTo(prevIdx)
+          }}
+        >
           <AnimatePresence>
             <motion.div
               key={`active-${current}`}
@@ -97,7 +114,7 @@ export default function ModuleNews({ data, locale = 'en' }: Props) {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.3, ease: 'easeOut' }}
+              transition={{ duration: 0.55, ease: 'easeInOut' }}
             >
               {activePost.coverImage?.imageUrl && (
                 <div className={s.imageWrap}>
@@ -118,12 +135,12 @@ export default function ModuleNews({ data, locale = 'en' }: Props) {
               )}
             </motion.div>
           </AnimatePresence>
-        </div>
+        </motion.div>
 
         {/* Next */}
         <button
           className={s.side}
-          onClick={() => setCurrent(nextIdx)}
+          onClick={() => goTo(nextIdx)}
           aria-label="Siguiente noticia"
         >
           {nextPost.coverImage?.imageUrl && (

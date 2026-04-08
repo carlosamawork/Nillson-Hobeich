@@ -8,5 +8,13 @@
     "about": "About",
     "work": "Work",
     "contact": "Contact"
+  },
+  "header": {
+    "clientAccess": "Client Access"
+  },
+  "contact": {
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address"
   }
 }

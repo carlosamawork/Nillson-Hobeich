@@ -8,5 +8,13 @@
     "about": "Om mig",
     "work": "Arbete",
     "contact": "Kontakt"
+  },
+  "header": {
+    "clientAccess": "Kundportal"
+  },
+  "contact": {
+    "email": "E-post",
+    "phone": "Telefon",
+    "address": "Adress"
   }
 }
