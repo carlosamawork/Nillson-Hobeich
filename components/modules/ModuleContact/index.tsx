@@ -45,7 +45,7 @@ export default async function ModuleContact({ data, contactInfo, locale = 'en' }
         {phones.length > 0 && (
           <div className={s.item}>
             <p className={s.itemLabel}>{t('phone')}</p>
-            <div className={s.itemContent}>
+            <div className={`${s.itemContent} ${s.phones}` }>
               {phones.map((phone) => (
                 <Link key={phone} href={`tel:${phone.replace(/\s/g, '')}`} className={s.value}>
                   {phone}
