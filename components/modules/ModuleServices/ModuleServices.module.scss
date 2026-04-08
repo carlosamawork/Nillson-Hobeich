@@ -110,6 +110,9 @@
   margin: 40px 0 0;
   opacity: 1;
   text-align: center;
+  @include media-breakpoint-down(md) {
+    margin: 15px 0 0;
+  }
 }
 
 .title {
@@ -121,5 +124,6 @@
 
   @include media-breakpoint-down(md) {
     font-size: font-size('lg', mobile);
+    margin: 0.5rem 0 0;
   }
 }
