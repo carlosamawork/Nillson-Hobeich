@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { PortableText } from '@portabletext/react'
@@ -7,6 +7,7 @@ import s from './PostModal.module.scss'
 import type { PostFull } from '@/sanity/queries/queries/post'
 import { getLocalizedText, getLocalizedBody } from '@/utils/localeHelper'
 import { portableBlockComponents } from '@/utils/portableText/portableText'
+import { WebContext } from '@/context/webContext'
 
 interface Props {
   post: PostFull
@@ -23,21 +24,38 @@ function CloseIcon() {
   )
 }
 
+const NEWS_LABEL: Record<string, string> = {
+  es: 'Noticias',
+  ca: 'Notícies',
+  sv: 'Nyheter',
+  en: 'News',
+}
+
+const BY_LABEL: Record<string, string> = {
+  es: 'Por',
+  ca: 'Per',
+  sv: 'Av',
+  en: 'By',
+}
+
 export default function PostModal({ post, locale = 'en', asModal = false }: Props) {
   const router = useRouter()
   const [isClosing, setIsClosing] = useState(false)
+  const { modalLocale, setModalLocale } = useContext(WebContext)
+  const effectiveLocale = modalLocale || locale
 
   function handleClose() {
     document.body.style.overflow = ''
+    setModalLocale(null)
     setIsClosing(true)
   }
 
-  const title = getLocalizedText(post.title, locale)
-  const body = getLocalizedBody(post.body as Parameters<typeof getLocalizedBody>[0], locale)
-  const authorRole = getLocalizedText(post.author?.role, locale)
+  const title = getLocalizedText(post.title, effectiveLocale)
+  const body = getLocalizedBody(post.body as Parameters<typeof getLocalizedBody>[0], effectiveLocale)
+  const authorRole = getLocalizedText(post.author?.role, effectiveLocale)
 
   const publishedDate = post.publishedAt
-    ? new Date(post.publishedAt).toLocaleDateString(locale, {
+    ? new Date(post.publishedAt).toLocaleDateString(effectiveLocale, {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -56,13 +74,13 @@ export default function PostModal({ post, locale = 'en', asModal = false }: Prop
 
   const content = (
     <article className={s.article}>
-      <p className={s.section}>Noticias</p>
+      <p className={s.section}>{NEWS_LABEL[effectiveLocale] ?? NEWS_LABEL.en}</p>
       <h1 className={s.title}>{title}</h1>
       {(post.author?.name || publishedDate) && (
         <p className={s.byline}>
           {post.author?.name && (
             <span>
-              Por {post.author.name}
+              {BY_LABEL[effectiveLocale] ?? BY_LABEL.en} {post.author.name}
               {authorRole && `, ${authorRole}`}
             </span>
           )}
@@ -99,7 +117,7 @@ export default function PostModal({ post, locale = 'en', asModal = false }: Prop
       <button
         className={s.close}
         onClick={handleClose}
-        aria-label="Cerrar"
+        aria-label={{ es: 'Cerrar', ca: 'Tancar', sv: 'Stäng', en: 'Close' }[effectiveLocale] ?? 'Close'}
       >
         <CloseIcon />
       </button>

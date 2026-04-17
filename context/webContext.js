@@ -8,11 +8,12 @@ export default function WebProvider({children}) {
 
     const [pageIsLoaded, setPageIsLoaded] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false)
+    const [modalLocale, setModalLocale] = useState(null)
     const router = useRouter();
-    
+
 
     async function changePageIsLoaded() {
-        setPageIsLoaded(true)  
+        setPageIsLoaded(true)
     }
 
     return (
@@ -22,6 +23,8 @@ export default function WebProvider({children}) {
                 pageIsLoaded,
                 menuOpen,
                 setMenuOpen,
+                modalLocale,
+                setModalLocale,
             }}
         >
             {children}

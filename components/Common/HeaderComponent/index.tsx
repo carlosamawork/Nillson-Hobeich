@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl'
 import s from './HeaderComponent.module.scss'
 import type { HeaderData } from '@/sanity/types'
 import { getLocalizedText } from '@/utils/localeHelper'
+import { WebContext } from '@/context/webContext'
 
 type Props = {
   data?: HeaderData
@@ -17,13 +18,22 @@ export default function HeaderComponent({ data, locale = 'en' }: Props) {
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
+  const { setModalLocale } = useContext(WebContext)
   const t = useTranslations('header')
 
   const links = data?.headerLinks ?? []
   const isModalOpen = pathname.startsWith('/news/')
 
   function switchLocale(next: string) {
-    router.replace(pathname, { locale: next, scroll: false })
+    const currentPath = window.location.pathname
+    const onNewsPage = currentPath.includes('/news/')
+    if (onNewsPage) {
+      setModalLocale(next)
+      const pathWithoutLocale = '/' + currentPath.split('/').slice(2).join('/')
+      window.history.replaceState({}, '', `/${next}${pathWithoutLocale}`)
+    } else {
+      router.replace(pathname, { locale: next, scroll: false })
+    }
     setMenuOpen(false)
   }
 
