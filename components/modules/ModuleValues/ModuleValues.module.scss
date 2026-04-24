@@ -95,6 +95,8 @@
   align-items: center;
   justify-content: center;
   gap: 2.4rem;
+  cursor: grab;
+  &:active { cursor: grabbing; }
 }
 
 .valueTitle {

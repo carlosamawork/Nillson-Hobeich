@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import s from './HomeIntro.module.scss'
 import type { ImageSanity } from '@/sanity/types/home'
+import { ok } from 'assert'
 
 interface HomeIntroProps {
   heroImage?: ImageSanity & { alt: string }
@@ -22,16 +23,15 @@ export default function HomeIntro({ heroImage }: HomeIntroProps) {
 
     const t1 = setTimeout(() => setStarVisible(true), 800)
     const t2 = setTimeout(() => setLogoVisible(true), 1400)
-    const t3 = setTimeout(() => setFadeOut(true), 2800)
+    const t3 = setTimeout(() => setFadeOut(true), 3600)
     const t4 = setTimeout(() => {
       introHasPlayed = true
       setHidden(true)
-    }, 4000)
+    }, 4800)
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)
       clearTimeout(t3)
-      clearTimeout(t4)
     }
   }, [])
 

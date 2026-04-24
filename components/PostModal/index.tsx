@@ -38,6 +38,13 @@ const BY_LABEL: Record<string, string> = {
   en: 'By',
 }
 
+const CLOSE_LABEL: Record<string, string> = {
+  es: 'Cerrar',
+  ca: 'Tancar',
+  sv: 'Stäng',
+  en: 'Close',
+}
+
 export default function PostModal({ post, locale = 'en', asModal = false }: Props) {
   const router = useRouter()
   const [isClosing, setIsClosing] = useState(false)
@@ -117,7 +124,7 @@ export default function PostModal({ post, locale = 'en', asModal = false }: Prop
       <button
         className={s.close}
         onClick={handleClose}
-        aria-label={{ es: 'Cerrar', ca: 'Tancar', sv: 'Stäng', en: 'Close' }[effectiveLocale] ?? 'Close'}
+        aria-label={CLOSE_LABEL[effectiveLocale] ?? CLOSE_LABEL.en}
       >
         <CloseIcon />
       </button>

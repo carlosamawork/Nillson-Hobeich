@@ -26,9 +26,9 @@ const ROLE_STATE = {
   next:   { x:  '80%', scale: 0.38, zIndex: 0, opacity: 1 },
 }
 
-const TRANSITION = { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] } as const
+const TRANSITION = { duration: 0.3, ease: 'easeOut' } as const
 
-const DRAG_THRESHOLD = 80
+const DRAG_THRESHOLD = 50
 
 const READ_MORE_LABELS: Record<string, string> = {
   es: 'LEER MÁS',
@@ -80,7 +80,7 @@ export default function ModuleNews({ data, locale = 'en' }: Props) {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.4, ease: 'easeOut' }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
           >
             {activeTitle}
           </motion.p>
@@ -93,7 +93,7 @@ export default function ModuleNews({ data, locale = 'en' }: Props) {
         className={s.stage}
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.12}
+        dragElastic={0.2}
         style={{ cursor: 'grab' }}
         whileDrag={{ cursor: 'grabbing' }}
         onDragEnd={(_, info) => {

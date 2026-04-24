@@ -75,9 +75,9 @@ export default function HeaderComponent({ data, locale = 'en' }: Props) {
 
         <div className={s.right}>
           <a
-            href="#contacto"
+            href="https://www.mnprogramweb.net/"
             className={s.clientAccess}
-            onClick={(e) => handleNavClick(e, '#contacto')}
+            target='_blank'
           >
             {t('clientAccess')}
           </a>

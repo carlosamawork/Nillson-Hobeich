@@ -61,6 +61,14 @@ export default function ModuleValues({ data, locale = 'en' }: Props) {
               animate="center"
               exit="exit"
               transition={{ duration: 0.3, ease: 'easeOut' }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(_, info) => {
+                const threshold = 50
+                if (info.offset.x < -threshold) next()
+                else if (info.offset.x > threshold) prev()
+              }}
               className={s.slide}
             >
               {valueTitle && <p className={s.valueTitle}>{valueTitle}</p>}
