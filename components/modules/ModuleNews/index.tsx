@@ -26,9 +26,12 @@ const ROLE_STATE = {
   next:   { x:  '80%', scale: 0.38, zIndex: 0, opacity: 1 },
 }
 
-const TRANSITION = { duration: 0.3, ease: 'easeOut' } as const
+const TRANSITION = { type: 'spring', stiffness: 280, damping: 32, mass: 0.8 } as const
 
-const DRAG_THRESHOLD = 50
+const TITLE_TRANSITION = { type: 'spring', stiffness: 320, damping: 34, mass: 0.7 } as const
+
+const DRAG_THRESHOLD = 40
+const SWIPE_VELOCITY_THRESHOLD = 350
 
 const READ_MORE_LABELS: Record<string, string> = {
   es: 'LEER MÁS',
@@ -80,7 +83,7 @@ export default function ModuleNews({ data, locale = 'en' }: Props) {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            transition={TITLE_TRANSITION}
           >
             {activeTitle}
           </motion.p>
@@ -93,12 +96,17 @@ export default function ModuleNews({ data, locale = 'en' }: Props) {
         className={s.stage}
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.2}
+        dragElastic={0.35}
+        dragTransition={{ bounceStiffness: 320, bounceDamping: 32 }}
         style={{ cursor: 'grab' }}
         whileDrag={{ cursor: 'grabbing' }}
         onDragEnd={(_, info) => {
-          if (info.offset.x < -DRAG_THRESHOLD) goTo(nextIdx, 1)
-          else if (info.offset.x > DRAG_THRESHOLD) goTo(prevIdx, -1)
+          const { offset, velocity } = info
+          if (offset.x < -DRAG_THRESHOLD || velocity.x < -SWIPE_VELOCITY_THRESHOLD) {
+            goTo(nextIdx, 1)
+          } else if (offset.x > DRAG_THRESHOLD || velocity.x > SWIPE_VELOCITY_THRESHOLD) {
+            goTo(prevIdx, -1)
+          }
         }}
       >
         <AnimatePresence initial={false}>

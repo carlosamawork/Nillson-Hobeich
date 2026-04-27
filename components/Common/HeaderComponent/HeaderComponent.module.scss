@@ -197,6 +197,24 @@
   }
 }
 
+.mobileClientAccess {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: font-size('xs');
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-decoration: none;
+  padding: 1.2rem 2.4rem;
+  border: 1px solid #fff;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  @include hover() {
+    background-color: #fff;
+    color: $secondary;
+  }
+}
+
 .mobileLocales {
   display: flex;
   align-items: center;

@@ -134,6 +134,15 @@ export default function HeaderComponent({ data, locale = 'en' }: Props) {
               )
             })}
           </nav>
+          <a
+            href="https://www.mnprogramweb.net/"
+            className={s.mobileClientAccess}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+          >
+            {t('clientAccess')}
+          </a>
           <div className={s.mobileLocales}>
             {routing.locales.map((loc) => (
               <button

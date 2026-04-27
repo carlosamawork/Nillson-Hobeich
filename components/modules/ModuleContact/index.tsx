@@ -63,7 +63,14 @@ export default async function ModuleContact({ data, contactInfo, locale = 'en' }
           <div className={s.item}>
             <p className={s.itemLabel}>{t('address')}</p>
             <div className={s.itemContent}>
-              <p className={s.value}>{address}</p>
+              <Link
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={s.value}
+              >
+                {address}
+              </Link>
             </div>
           </div>
         )}
